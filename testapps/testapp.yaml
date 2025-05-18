@@ -1,0 +1,55 @@
+##################################################################################################
+# Testapp: curl instance
+##################################################################################################
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: testapp
+  namespace: istioapp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: testapp
+  namespace: istioapp
+  labels:
+    app: testapp
+    service: testapp
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: testapp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testapp
+  namespace: istioapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testapp
+  template:
+    metadata:
+      labels:
+        app: testapp
+    spec:
+      terminationGracePeriodSeconds: 0
+      serviceAccountName: testapp
+      containers:
+      - name: curl
+        image: curlimages/curl
+        command: ["/bin/sleep", "infinity"]
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /etc/curl/tls
+          name: secret-volume
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: curl-secret
+          optional: true
+---
