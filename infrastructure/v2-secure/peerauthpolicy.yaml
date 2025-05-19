@@ -1,4 +1,3 @@
-
 # Enforces strict mutual TLS, meaning all traffic must be encrypted and authenticated using Istio-issued certificates.
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication

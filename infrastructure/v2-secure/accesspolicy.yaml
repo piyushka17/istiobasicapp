@@ -1,3 +1,16 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: namespace-authpolicy
+  namespace: istioapp
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: ["istioapp"]
+
+---
 
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
@@ -7,13 +20,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: backend
+      app: reviews
   action: ALLOW
   rules:
   - from:
     - source:
-      principals: ["cluster.local/ns/istioapp/sa/bookinfo-productpage"]
+        principals: ["cluster.local/ns/istioapp/sa/bookinfo-productpage"]
+
 ---
+
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -22,9 +37,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: backend
+      app: ratings
   action: ALLOW
   rules:
   - from:
     - source:
-      principals: ["cluster.local/ns/istioapp/sa/bookinfo-reviews"]
+        principals: ["cluster.local/ns/istioapp/sa/bookinfo-reviews"]
+
+---
