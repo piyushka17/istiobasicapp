@@ -1,20 +1,6 @@
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: namespace-authpolicy
-  namespace: istioapp
-spec:
-  action: ALLOW
-  rules:
-  - from:
-    - source:
-        namespaces: ["istioapp"]
-
----
-
-apiVersion: security.istio.io/v1beta1
-kind: AuthorizationPolicy
-metadata:
   name: reviews-authpolicy
   namespace: istioapp
 spec:
