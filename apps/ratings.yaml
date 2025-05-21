@@ -10,6 +10,7 @@ metadata:
     app: ratings
     service: ratings
 spec:
+  type: LoadBalancer
   ports:
   - port: 9080
     name: http

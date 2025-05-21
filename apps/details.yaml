@@ -10,6 +10,7 @@ metadata:
     app: details
     service: details
 spec:
+  type: LoadBalancer
   ports:
   - port: 9080
     name: http
